@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Router from "./Router";
-import firebase from "../firebase";
+import Router from "components/Router";
+import fbase from "fbase";
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
