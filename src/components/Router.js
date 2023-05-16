@@ -4,10 +4,7 @@ import EditProfile from "../routes/EditProfile";
 import Home from "../routes/Home";
 import Profile from "../routes/Profile";
 
-import { useState } from "react";
-
-const useRouter = () => {
-  const [isLogin, setIsLogin] = useState(false);
+const useRouter = ({ isLogin }) => {
   const router = createBrowserRouter([
     {
       path: "/",
@@ -26,8 +23,8 @@ const useRouter = () => {
   return router;
 };
 
-export default function Router() {
-  const router = useRouter();
+export default function Router({ isLogin }) {
+  const router = useRouter(isLogin);
 
   return <RouterProvider router={router} />;
 }
