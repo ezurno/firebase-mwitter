@@ -56,3 +56,72 @@ export default app;
 <br/>
 
 설치 후 `console.log(firebase)` 로 찍어보면 정상 연결 된 것을 볼 수 있음
+
+<br/>
+<br/>
+<hr/>
+
+###### 202305016
+
+> ## jsconfig.json 수정
+
+<br/>
+
+- `jsconfig.json` 파일 생성
+- 해당하는 `baseUrl` 을 `src` 로 바꾸어 import 시 편리하게 변경
+- `import` 기준 폴더 위치가 `src` 이므로 import 수정
+
+<br/>
+
+```JS
+//App.js
+import Router from "components/Router";
+import fbase from "fbase";
+import { authService } from "fbase";
+```
+
+<br/>
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": "src"
+  },
+  "include": ["src"]
+}
+```
+
+<br/>
+
+> ## getAuth()
+
+<br/>
+
+- `authService` 를 사용하기 위해 `getAuth()` 함수로 `firebase` 에서 연동
+- `authService.currentUser` 는 현재 유저 정보를 불러오며 **User | null type** [공식문서 참고](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#currentuser)
+
+<br/>
+<img src ="md_resources\resource_03.png" height="250"/>
+<br/>
+
+```JS
+// App.js
+export default function App() {
+  //   console.log(authService.currentUser);
+  // authService 의 currentUser var 는 현재 유저정보를 불러옴 User | null
+
+  const [isLogin, setIsLogin] = useState(authService.currentUser);
+  return (
+    <>
+      <Router isLogin={isLogin} />
+      <footer>&copy; {new Date().getFullYear()} Mwitter</footer>
+    </>
+  );
+}
+```
+
+<br/>
+<img src ="md_resources\resource_04.png" height="150"/>
+<br/>
+
+console.log() 를 찍어보면 아직 해당하는 유저값이 없으므로 null이 반환 되는 것을 볼 수 있음
