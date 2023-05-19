@@ -6,24 +6,6 @@ import {
 import { useForm } from "react-hook-form";
 
 export default function Auth() {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-
-  // const onChange = (event) => {
-  //   const {
-  //     target: { name, value },
-  //   } = event;
-  //   if (name === "email") {
-  //     setEmail(value);
-  //   } else if (name === "password") {
-  //     setPassword(value);
-  //   }
-  // };
-
-  // const onSubmit = (event) => {
-  //   event.preventDefault();
-  // };
-
   const {
     register,
     handleSubmit,
@@ -38,12 +20,35 @@ export default function Auth() {
     formState: { errors: signErrors },
   } = useForm();
 
-  const onLoginValid = (data) => {
+  const onLoginValid = async (data) => {
     console.log(data);
+    try {
+      const auth = getAuth();
+      const test = await signInWithEmailAndPassword(
+        auth,
+        data.loginId,
+        data.loginPw
+      );
+      console.log(test);
+    } catch (error) {
+      console.log(`error : ${error}`);
+    }
   };
 
-  const onSignUpValid = (data) => {
+  const onSignUpValid = async (data) => {
     console.log(data);
+    try {
+      const auth = getAuth();
+      const test = await createUserWithEmailAndPassword(
+        auth,
+        data.signUpId,
+        data.signUpPw
+      );
+
+      console.log(test);
+    } catch (error) {
+      console.log(`error : ${error}`);
+    }
   };
 
   return (
@@ -72,6 +77,8 @@ export default function Auth() {
             },
           })}
           placeholder="비밀번호"
+          type="password"
+          autoComplete="off"
         />
         <span>{errors?.loginPw?.message}</span>
 
@@ -107,6 +114,8 @@ export default function Auth() {
             },
           })}
           placeholder="비밀번호"
+          type="password"
+          autoComplete="off"
         />
         <span>{signErrors?.signUpPw?.message}</span>
 
