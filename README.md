@@ -125,3 +125,112 @@ export default function App() {
 <br/>
 
 console.log() 를 찍어보면 아직 해당하는 유저값이 없으므로 null이 반환 되는 것을 볼 수 있음
+
+<br/>
+<br/>
+<hr/>
+
+###### 202305019
+
+> ## Authentication 을 활용해 회원가입 만들기
+
+<br/>
+
+- `firebase` 는 자체 데이터베이스로 회원정보를 관리해줌
+- `Authentication` 을 사용해 손쉽게 적용 가능
+- 일반적인 email-password 형식뿐만 아니라 **Google**, **GitHub** 계정도 연동 할 수 있음
+
+<br/>
+<p>
+<img src="md_resources/resource_05.png" height="150"/>
+<img src="md_resources/resource_09.png" height="150"/>
+<p/>
+<br/>
+
+`firebase > authentication` 으로 들어가면 여러 형식이 있음
+
+하지만 **GitHub** 은 `github` 의 `Developer-settings` 로 가서 `secret-key` 를 받아와야 함
+
+<br/>
+<p>
+<img src="md_resources/resource_06.png" height="150"/>
+<img src="md_resources/resource_07.png" height="150"/>
+<p/>
+<br/>
+
+`github login > developer settings > OAuth Apps`
+
+<br/>
+<img src="md_resources/resource_08.png" width="400"/>
+<br/>
+
+`firebase` 의 `callback url` 위치를 사용해 입력
+
+<br/>
+<img src="md_resources/resource_10.png" width="400"/>
+<br/>
+
+테스트를 하기 위한 `form tag` 생성
+
+`Validation` 을 통과하면 `firebase/auth` 의 함수를 사용해 구현
+
+<br/>
+
+```JS
+//Auth.js
+
+  const onLoginValid = async (data) => {
+    console.log(data);
+    try {
+      const auth = getAuth();
+      const test = await signInWithEmailAndPassword(
+        auth,
+        data.loginId,
+        data.loginPw
+      );
+      console.log(test);
+    } catch (error) {
+      console.log(`error : ${error}`);
+    }
+  }; // LoginForm validation 통과 시 작동, 특정함수는 공식문서 참고
+
+    const onSignUpValid = async (data) => {
+    console.log(data);
+    try {
+      const auth = getAuth();
+      const test = await createUserWithEmailAndPassword(
+        auth,
+        data.signUpId,
+        data.signUpPw
+      );
+
+      console.log(test);
+    } catch (error) {
+      console.log(`error : ${error}`);
+    }
+  };
+```
+
+<br/>
+
+`createUserWithEmailAndPassword`, `signInWithEmailAndPassword` 함수 사용법은 [공식문서 참고](https://firebase.google.com/docs/auth/web/password-auth?hl=ko)
+
+<br/>
+<img src="md_resources/resource_11.png" height="200"/>
+<br/>
+
+- `createUserWithEmailAndPassword` 을 이용해 email, password 를 입력해 회원가입 시도
+- 회원가입 성공 시 자동으로 로그인 까지 되므로 로그인 값을 출력해 봄
+- createUser**WithEmailAndPassword** 이므로 값을 주는 형식이 email 형식이어야 통과가 되므로 유의
+
+<br/>
+<img src="md_resources/resource_12.png" height="200"/>
+<br/>
+
+`firebase` 를 확인해보면 정상적으로 값이 들어온 것을 확인 가능
+
+<br/>
+<img src="md_resources/resource_13.png" height="200"/>
+<br/>
+
+`firebaseLocalStorage` 를 확인해보면 정상적으로 로그인이 성공했다는 것을 볼 수 있음
