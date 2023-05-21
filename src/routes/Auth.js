@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 export default function Auth() {
   const {
@@ -20,34 +21,25 @@ export default function Auth() {
     formState: { errors: signErrors },
   } = useForm();
 
+  const [resError, setResError] = useState("");
+
   const onLoginValid = async (data) => {
-    console.log(data);
     try {
       const auth = getAuth();
-      const test = await signInWithEmailAndPassword(
-        auth,
-        data.loginId,
-        data.loginPw
-      );
-      console.log(test);
+      await signInWithEmailAndPassword(auth, data.loginId, data.loginPw);
     } catch (error) {
-      console.log(`error : ${error}`);
+      console.log(error.message);
+      setResError(error.message.replace("Firebase: Error", ""));
     }
   };
 
   const onSignUpValid = async (data) => {
-    console.log(data);
     try {
       const auth = getAuth();
-      const test = await createUserWithEmailAndPassword(
-        auth,
-        data.signUpId,
-        data.signUpPw
-      );
-
-      console.log(test);
+      await createUserWithEmailAndPassword(auth, data.signUpId, data.signUpPw);
     } catch (error) {
-      console.log(`error : ${error}`);
+      console.log(error.message.replace("Firebase:", ""));
+      setResError(error.message);
     }
   };
 
@@ -121,6 +113,7 @@ export default function Auth() {
 
         <button>확인</button>
       </form>
+      <p>{resError}</p>
     </div>
   );
 }
