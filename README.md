@@ -234,3 +234,40 @@ console.log() 를 찍어보면 아직 해당하는 유저값이 없으므로 nul
 <br/>
 
 `firebaseLocalStorage` 를 확인해보면 정상적으로 로그인이 성공했다는 것을 볼 수 있음
+
+<br/>
+<br/>
+<hr/>
+
+###### 202305021
+
+> ## onAuthStateChanged() 로 Auth 의 상태체크
+
+<br/>
+
+- `firebase` 는 `onAuthStateChanged()` 함수로 `auth` 가 변했는지 유무를 확인 할 수 있음
+- 해당 함수로 로그인 여부 조정 가능
+
+<br/>
+
+```JS
+//App.js
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLogin(true);
+        const uid = user.uid;
+      } else {
+        setIsLogin(false);
+      }
+      setInit(true);
+    });
+  }, []);
+```
+
+<br/>
+<img src="md_resources/resource_14.png" width="250"/>
+<br/>
+
+`error.message` 로 `firebase` 에서 주는 에러메세지를 받아 사용할 수 있음
