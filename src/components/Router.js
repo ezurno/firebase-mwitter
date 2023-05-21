@@ -4,7 +4,7 @@ import EditProfile from "../routes/EditProfile";
 import Home from "../routes/Home";
 import Profile from "../routes/Profile";
 
-const useRouter = ({ isLogin }) => {
+const useRouter = (isLogin) => {
   const router = createBrowserRouter([
     {
       path: "/",
