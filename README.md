@@ -271,3 +271,76 @@ console.log() 를 찍어보면 아직 해당하는 유저값이 없으므로 nul
 <br/>
 
 `error.message` 로 `firebase` 에서 주는 에러메세지를 받아 사용할 수 있음
+
+<br/>
+<br/>
+<hr/>
+
+###### 202305023
+
+> ## Google & GitHub 계정으로 로그인 하기
+
+<br/>
+
+- `firebase` 는 `Google` 과 `GitHub` 계정으로도 로그인 할 수 있음
+- `GoogleAuthProvider`, `GithubAuthProvider`
+- **new-pages** 방식과 **pop-up** 스타일이 있는데, 해당 페이지에선 **pop-up** 으로 만들 예정
+
+<br/>
+
+```JS
+  const onSocialClick = async (event) => {
+    const {
+      target: { name },
+    } = event;
+    let provider;
+    if (name === "google") {
+      provider = new GoogleAuthProvider();
+    } else if (name === "github") {
+      provider = new GithubAuthProvider();
+    }
+    await signInWithPopup(authService, provider);
+  }; // 자세한 내용은 공식문서 참고
+```
+
+<br/>
+<img src="md_resources/resource_15.png" width="400"/>
+<br/>
+
+`Google account` 로 로그인 시도 시 새로운 **팝업 창** 이 열림
+
+<br/>
+<img src="md_resources/resource_16.png" width="400"/>
+<br/>
+
+`firebase > authentication` 을 확인하면 정상적으로 로그인 처리 된 모습을 볼 수 있음
+
+<br/>
+<img src="md_resources/resource_17.png" width="400"/>
+<br/>
+
+<br/>
+<img src="md_resources/resource_18.png" width="400"/>
+<br/>
+
+`Github` 도 정상적으로 로그인 처리 된 것 을 볼 수 있음
+
+> ## logout 생성하기
+
+<br/>
+
+- `Log-out` 을 구현하려면 `storage` 의 `key` 값을 지워주면 됨
+- `signOut()` 함수로 간단하게 만들 수 있음
+
+<br/>
+
+```JS
+//Profile.js
+  const nav = useNavigate();
+
+  const onLogOutClick = () => {
+    authService.signOut();
+    nav("/");
+    // 로그아웃 후 main 화면으로 이동
+  };
+```
