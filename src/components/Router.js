@@ -3,20 +3,38 @@ import Auth from "../routes/Auth";
 import EditProfile from "../routes/EditProfile";
 import Home from "../routes/Home";
 import Profile from "../routes/Profile";
+import Navigation from "./Navigation";
 
 const useRouter = (isLogin) => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: isLogin ? <Home /> : <Auth />,
+      element: isLogin ? (
+        <>
+          <Navigation />
+          <Home />
+        </>
+      ) : (
+        <Auth />
+      ),
     },
     {
       path: "/edit-profile",
-      element: <EditProfile />,
+      element: (
+        <>
+          {isLogin ? <Navigation /> : null}
+          <EditProfile />
+        </>
+      ),
     },
     {
       path: "/profile",
-      element: <Profile />,
+      element: (
+        <>
+          {isLogin ? <Navigation /> : null}
+          <Profile />
+        </>
+      ),
     },
   ]);
 
