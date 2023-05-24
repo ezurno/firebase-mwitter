@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import "firebase/auth";
 import { getAuth } from "firebase/auth";
 import "firebase/database";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -16,5 +17,8 @@ const app = initializeApp(firebaseConfig);
 
 export const authService = getAuth();
 // firebase 의 authentical-service 를 사용하기 위함
+
+export const dbService = getFirestore();
+// firebase 의 firestore db 를 사용하기 위
 
 export default app;
