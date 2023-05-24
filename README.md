@@ -344,3 +344,81 @@ console.log() 를 찍어보면 아직 해당하는 유저값이 없으므로 nul
     // 로그아웃 후 main 화면으로 이동
   };
 ```
+
+<br/>
+<br/>
+<hr/>
+
+###### 202305024
+
+> ## Firestore 에 chat 저장하기
+
+<br/>
+<img src="md_resources/resource_19.png" width="400"/>
+<br/>
+
+`firebase` 의 `firestore` 를 사용해 `database` 에 접근해 `chat` 내용을 저장할 예정
+
+<br/>
+<p>
+<img src="md_resources/resource_20.png" width="400"/>
+<img src="md_resources/resource_21.png" width="400"/>
+<p/>
+<br/>
+
+`firestore > test-mode` 로 생성
+
+정상적으로 생성 된 모습. `firestore` 는 `no-sql` 기반 데이터 베이스임
+
+<br/>
+<img src="md_resources/resource_22.png" width="400"/>
+<br/>
+
+`Collection-Start` 로 생성
+
+<br/>
+<img src="md_resources/resource_23.png" width="400"/>
+<br/>
+
+`Document` 를 `chat` 으로 설계 할 것이며, `Field` 는 `chat` 내의 `value`. ex\) 작성날짜, 이름, 내용 ...
+
+<br/>
+
+```JS
+//Home.js
+/* --- React-Hook-Form 을 사용해 값을 전달했음 --- */
+
+  const onValid = async (data) => {
+    console.log(data.chat);
+    try {
+      const docRef = await addDoc(collection(dbService, "mweets"), {
+        //document 추가하기 위해 addDoc 을 사용해 해당 collection 에 값을 작성 (mweets)
+        mweet: data.chat,
+        createdAt: Date.now(),
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+
+    setValue("chat", "");
+    // onValid 통과시 input 을 비워주는 함수
+  };
+
+//fbase.js
+import { getFirestore } from "firebase/firestore";
+
+export const dbService = getFirestore();
+// firebase 의 firestore 에 접근
+```
+
+<br/>
+<p>
+<img src="md_resources/resource_24.png" height="150"/>
+<img src="md_resources/resource_25.png" height="150"/>
+<p/>
+<br/>
+
+`console.log` 로 찍어 데이터가 정상적으로 들어가는 것을 확인
+
+`firestore` 에서 정상적으로 `document` 와 `field` 값을 받은 것을 확인
