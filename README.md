@@ -483,3 +483,22 @@ export const dbService = getFirestore();
 <br/>
 
 값을 정상적으로 출력하는 모습
+
+<br/>
+
+```JS
+// index.js
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  // <React.StrictMode>
+    <App />
+  // </React.StrictMode>
+);
+```
+
+<br/>
+
+- `StrictMode` 를 사용 시` side-effect`를 줄이기 위해 일부러 두번씩 실행시킴
+- **dev-environment**에서만 두번씩 호출되고 **production**에서는 무시
+- [문서 참고](https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects)
