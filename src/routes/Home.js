@@ -1,5 +1,6 @@
 import { dbService } from "fbase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Home() {
@@ -10,6 +11,28 @@ export default function Home() {
     setValue,
     formState: { errors },
   } = useForm();
+
+  const [mweets, setMweets] = useState([]);
+
+  const getMweets = async () => {
+    const dbMweets = await getDocs(collection(dbService, "mweets"));
+    // console.log(dbMweets);
+
+    dbMweets.forEach((document) => {
+      const mweetInterface = {
+        ...document.data(),
+        id: document.id,
+      };
+      // console.log(document.data());
+      setMweets((prev) => [mweetInterface, ...prev]);
+    });
+  };
+
+  console.log(mweets);
+
+  useEffect(() => {
+    getMweets();
+  }, []);
 
   const onValid = async (data) => {
     console.log(data.chat);
@@ -38,6 +61,14 @@ export default function Home() {
         />
         <button>Submit</button>
       </form>
+
+      <div>
+        {mweets.map((data) => (
+          <div key={data.id}>
+            <h3>{data.mweet}</h3>
+          </div>
+        ))}
+      </div>
     </>
   );
 }
