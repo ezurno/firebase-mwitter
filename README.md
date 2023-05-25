@@ -422,3 +422,64 @@ export const dbService = getFirestore();
 `console.log` 로 찍어 데이터가 정상적으로 들어가는 것을 확인
 
 `firestore` 에서 정상적으로 `document` 와 `field` 값을 받은 것을 확인
+
+<br/>
+<br/>
+<hr/>
+
+###### 202305025
+
+> ## Firestore 에 chat 가져오기
+
+<br/>
+
+- `firebase` 의 `firestore` 는 `document` 를 가져오기 위해선 `getDocs` 를 사용함
+- 함수는 [공식문서 참고](https://firebase.google.com/docs/reference/js/v8/firebase.firestore.CollectionReference#get)
+
+<br/>
+
+```JS
+//Home.js
+
+  const [mweets, setMweets] = useState([]);
+
+  const getMweets = async () => {
+    const dbMweets = await getDocs(collection(dbService, "mweets"));
+    // console.log(dbMweets);
+
+    dbMweets.forEach((document) => {
+      const mweetInstance = {
+        ...document.data(),
+        id: document.id,
+      };
+      // console.log(document.data());
+      setMweets((prev) => [mweetInterface, ...prev]);
+    });
+  };
+
+  useEffect(() => {
+    getMweets();
+  }, []);
+```
+
+`await getDocs(collection(dbService, "mweets"))` 로 `documents` 를 가져오고 `console.log` 를 찍으면
+
+<br/>
+<img src="md_resources/resource_28.png" width="400"/>
+<br/>
+
+해당하는 `query` 값이 나옴 하지만 이 형식은 우리가 원하는 형식이 아님
+
+`data()` 함수로 데이터 값을 사용할 수 있음 [(공식문서 참고)](https://firebase.google.com/docs/reference/js/v8/firebase.firestore.QueryDocumentSnapshot#data)
+
+<br/>
+<img src="md_resources/resource_26.png" width="400"/>
+<br/>
+
+`data()` 함수로 값을 뽑으며 `instance` 를 사용해 data-form 을 조정해 es6 문법으로 정의하여 넣은 모습
+
+<br/>
+<img src="md_resources/resource_27.png" width="200"/>
+<br/>
+
+값을 정상적으로 출력하는 모습

@@ -19,12 +19,12 @@ export default function Home() {
     // console.log(dbMweets);
 
     dbMweets.forEach((document) => {
-      const mweetInterface = {
+      const mweetInstance = {
         ...document.data(),
         id: document.id,
       };
       // console.log(document.data());
-      setMweets((prev) => [mweetInterface, ...prev]);
+      setMweets((prev) => [mweetInstance, ...prev]);
     });
   };
 
