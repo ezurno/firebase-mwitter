@@ -502,3 +502,117 @@ root.render(
 - `StrictMode` 를 사용 시` side-effect`를 줄이기 위해 일부러 두번씩 실행시킴
 - **dev-environment**에서만 두번씩 호출되고 **production**에서는 무시
 - [문서 참고](https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects)
+
+<br/>
+<br/>
+<hr/>
+
+###### 202305027
+
+> ## CRUD 의 update, delete 를 위해 field 생성
+
+<br/>
+
+- **CRUD(Create, Read, Update, Delete)** 중 **Update, Delete** 를 하기 위해선 **글을 작성한 userId** 가 필요함
+- 따라서 새로운 `field` 생성
+
+<br/>
+
+```JS
+//Home.js
+
+  const onValid = async (data) => {
+    // console.log(data.chat);
+    try {
+      const docRef = await addDoc(collection(dbService, "mweets"), {
+        text: data.chat,
+        createdAt: Date.now(),
+        creatorId: userObj.uid,
+        // 작성자의 id 추가
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+
+    setValue("chat", "");
+    // onValid 통과시 input 을 비워주는 함수
+  };
+
+  ////////////////////////////
+
+// App.js
+    useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLogin(true);
+        setUserObj(user);
+      } else {
+        setIsLogin(false);
+      }
+      setInit(true);
+    });
+  }, []);
+```
+
+`userObj.uid` 는 `App.js` 의 `useEffect()` 내 **user-args** 에서 가져옴
+
+<br/>
+<img src="md_resources/resource_29.png" width="400"/>
+<br/>
+
+<br/>
+<img src="md_resources/resource_30.png" width="400"/>
+<br/>
+
+새로운 `field` **creatorId** 를 정상적으로 생성해 주었음
+
+<br/>
+
+> ## real-time 으로 firestore 에 접근하기
+
+<br/>
+
+- **실시간으로** 데이터값을 조회하기 위해 기존의 `getMeets()` 가 아닌 `query` 에 접근하는 방식을 사용
+- `query` 값으로 `firestore` 에 접근
+
+<br/>
+
+```JS
+//Home.js
+
+  useEffect(() => {
+    // getMweets();
+    const queryData = query(
+      collection(dbService, "mweets"),
+      orderBy("createdAt", "desc")
+    );
+  // query 값으로 fireStore 의 collection > mweets 에 접근함
+
+    onSnapshot(queryData, (snapshot) => {
+      // onSnapshot function 은 real-time 으로 query 에 접근해 데이터를 보여줄 수 있음
+      console.log(snapshot.docs);
+      const newArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log(newArray);
+      setMweets(newArray);
+    });
+  }, []);
+```
+
+<br/>
+<img src="md_resources/resource_31.png" width="400"/>
+<br/>
+
+`console.log(snapshot.doc)`. `query` 에 접근해 데이터 값이 3개 들어온 것을 확인 할 수 있음
+
+map 함수를 이용해서 `newArray` 변수로 지정해 `reform` 해줄 예정
+
+<br/>
+<img src="md_resources/resource_32.png" width="400"/>
+<br/>
+
+`console.log(newArray)`. `getMweets()` 보다 나은 방식으로 새로운 배열로 `setMeets()` 를 해줄 수 있음
