@@ -1,5 +1,12 @@
 import { dbService } from "fbase";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -16,22 +23,37 @@ export default function Home({ userObj }) {
 
   const [mweets, setMweets] = useState([]);
 
-  const getMweets = async () => {
-    const dbMweets = await getDocs(collection(dbService, "mweets"));
-    // console.log(dbMweets);
+  // const getMweets = async () => {
+  //   const dbMweets = await getDocs(collection(dbService, "mweets"));
+  //   // console.log(dbMweets);
 
-    dbMweets.forEach((document) => {
-      const mweetInstance = {
-        ...document.data(),
-        id: document.id,
-      };
-      // console.log(document.data());
-      setMweets((prev) => [mweetInstance, ...prev]);
-    });
-  };
+  //   dbMweets.forEach((document) => {
+  //     const mweetInstance = {
+  //       ...document.data(),
+  //       id: document.id,
+  //     };
+  //     // console.log(document.data());
+  //     setMweets((prev) => [mweetInstance, ...prev]);
+  //   });
+  // };
 
   useEffect(() => {
-    getMweets();
+    // getMweets();
+
+    const queryData = query(
+      collection(dbService, "mweets"),
+      orderBy("createdAt", "desc")
+    );
+
+    onSnapshot(queryData, (snapshot) => {
+      console.log(snapshot.docs);
+      const newArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log(newArray);
+      setMweets(newArray);
+    });
   }, []);
 
   const onValid = async (data) => {
