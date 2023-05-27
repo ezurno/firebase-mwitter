@@ -10,12 +10,14 @@ export default function App() {
 
   const [isLogin, setIsLogin] = useState(true);
 
+  const [userObj, setUserObj] = useState(null);
+
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLogin(true);
-        const uid = user.uid;
+        setUserObj(user);
       } else {
         setIsLogin(false);
       }
@@ -25,7 +27,11 @@ export default function App() {
 
   return (
     <>
-      {init ? <Router isLogin={isLogin} /> : "Initializing..."}
+      {init ? (
+        <Router isLogin={isLogin} userObj={userObj} />
+      ) : (
+        "Initializing..."
+      )}
       <footer>&copy; {new Date().getFullYear()} Mwitter</footer>
     </>
   );

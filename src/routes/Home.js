@@ -3,7 +3,9 @@ import { addDoc, collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function Home() {
+export default function Home({ userObj }) {
+  // console.log(userObj);
+
   const {
     register,
     handleSubmit,
@@ -28,18 +30,17 @@ export default function Home() {
     });
   };
 
-  console.log(mweets);
-
   useEffect(() => {
     getMweets();
   }, []);
 
   const onValid = async (data) => {
-    console.log(data.chat);
+    // console.log(data.chat);
     try {
       const docRef = await addDoc(collection(dbService, "mweets"), {
-        mweet: data.chat,
+        text: data.chat,
         createdAt: Date.now(),
+        creatorId: userObj.uid,
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (error) {
@@ -65,7 +66,7 @@ export default function Home() {
       <div>
         {mweets.map((data) => (
           <div key={data.id}>
-            <h3>{data.mweet}</h3>
+            <h3>{data.text}</h3>
           </div>
         ))}
       </div>

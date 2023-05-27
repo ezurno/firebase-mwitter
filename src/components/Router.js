@@ -5,14 +5,14 @@ import Home from "../routes/Home";
 import Profile from "../routes/Profile";
 import Navigation from "./Navigation";
 
-const useRouter = (isLogin) => {
+const useRouter = (isLogin, userObj) => {
   const router = createBrowserRouter([
     {
       path: "/",
       element: isLogin ? (
         <>
           <Navigation />
-          <Home />
+          <Home userObj={userObj} />
         </>
       ) : (
         <Auth />
@@ -41,8 +41,8 @@ const useRouter = (isLogin) => {
   return router;
 };
 
-export default function Router({ isLogin }) {
-  const router = useRouter(isLogin);
+export default function Router({ isLogin, userObj }) {
+  const router = useRouter(isLogin, userObj);
 
   return <RouterProvider router={router} />;
 }
