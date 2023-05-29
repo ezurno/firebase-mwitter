@@ -88,7 +88,11 @@ export default function Home({ userObj }) {
 
       <div>
         {mweets.map((data) => (
-          <Mweet key={data.id} mweetObj={data} />
+          <Mweet
+            key={data.id}
+            mweetObj={data}
+            isOwner={data.creatorId === userObj.uid}
+          />
         ))}
       </div>
     </>
