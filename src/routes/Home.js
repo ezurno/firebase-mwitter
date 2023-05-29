@@ -1,3 +1,4 @@
+import Mweet from "components/Mweet";
 import { dbService } from "fbase";
 import {
   addDoc,
@@ -87,9 +88,7 @@ export default function Home({ userObj }) {
 
       <div>
         {mweets.map((data) => (
-          <div key={data.id}>
-            <h3>{data.text}</h3>
-          </div>
+          <Mweet key={data.id} mweetObj={data} />
         ))}
       </div>
     </>
