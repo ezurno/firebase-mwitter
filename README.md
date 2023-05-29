@@ -616,3 +616,64 @@ map 함수를 이용해서 `newArray` 변수로 지정해 `reform` 해줄 예정
 <br/>
 
 `console.log(newArray)`. `getMweets()` 보다 나은 방식으로 새로운 배열로 `setMeets()` 를 해줄 수 있음
+
+<br/>
+<br/>
+<hr/>
+
+###### 202305029
+
+> ## Owner-Check
+
+<br/>
+
+- 글을 지울때 글 작성자와 로그인 사용자가 서로 같아야만 지울 수 있게 설계
+- 코드 재사용을 위해 **<Mweet/>** 으로 **refactoring** 하여 사용
+
+<br/>
+
+```JS
+///Home.js
+      <div>
+        {mweets.map((data) => (
+          <Mweet
+            key={data.id}
+            mweetObj={data}
+            isOwner={data.creatorId === userObj.uid}
+          />
+        ))}
+      </div>
+
+//Mweet.js
+export default function Mweet({ mweetObj, isOwner }) {
+  return (
+    <>
+      <h4>{mweetObj.text}</h4>
+      {isOwner && (
+        <>
+          <button>Delete</button>
+          <button>Edit</button>
+        </>
+      )}
+    </>
+  );
+}
+```
+
+<br/>
+<img src="md_resources/resource_33.png" height="400"/>
+<br/>
+
+작성글에 `Delete`, `Edit` 버튼을 생성
+
+<br/>
+<img src="md_resources/resource_34.png" width="400"/>
+<br/>
+
+`fireStore` 에서 특정 글의 작성자 id 를 수정해보면
+
+<br/>
+<img src="md_resources/resource_35.png" height="400"/>
+<br/>
+
+해당하는 글만 수정버튼이 사라지는 것을 볼 수 있다.
