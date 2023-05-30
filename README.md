@@ -677,3 +677,100 @@ export default function Mweet({ mweetObj, isOwner }) {
 <br/>
 
 해당하는 글만 수정버튼이 사라지는 것을 볼 수 있다.
+
+<br/>
+<br/>
+<hr/>
+
+###### 202305030
+
+> ## Delete, Update
+
+<br/>
+
+- `Delete`, `Update` 를 구현
+- `window.confirm()` 을 사용해 삭제 여부를 사용자에게 되물음
+- `mweetTextRef` 으로 해당하는 **mweet** 의 **doc ref** 를 지정 `doc.(dbService, document, id)`
+- 비동기 처리를 걸어주어야 함
+
+- `react-hook-form` 은 **enter key** 입력 시 **자동으로** `onSubmit` 으로 넘어가는데 해당 동작을 제거해 주었음
+
+<br/>
+
+```JS
+// Mweet.js
+
+  ///////// DELETE //////////
+
+  const onDeleteClick = async () => {
+    const mweetTextRef = doc(dbService, "mweets", `${mweetObj.id}`);
+    // 해당 Meets 의 References
+    const ok = window.confirm("Are you sure you want to delete this mweet?");
+    console.log(ok);
+
+    if (ok) {
+      // delete mweet
+      await deleteDoc(mweetTextRef);
+      // delete 실행, 비동기 처리해야함
+    }
+  };
+
+
+  ///////// UPDATE //////////
+
+  const onValid = async (data) => {
+    const mweetTextRef = doc(dbService, "mweets", `${mweetObj.id}`);
+
+    console.log(data);
+
+    await updateDoc(mweetTextRef, {
+      text: data.newMweet,
+    });
+
+    setEditing(false);
+  };
+
+  const onChangeMweet = async (event) => {
+    const {
+      target: { value },
+    } = event;
+    setTargetValue(value);
+  };
+```
+
+<br/>
+<img src="md_resources/resource_36.png" width="400"/>
+<br/>
+
+`window.confirm()` 으로 삭제여부를 확인 하는 모습
+
+<br/>
+<img src="md_resources/resource_37.png" height="250"/>
+<br/>
+
+정상적으로 삭제가 되었음
+
+<br/>
+
+```JS
+//Mweet.js
+/* react-hook-form 의 enter key 작동 중지 */
+
+  const checkKeyDown = (event) => {
+    if (event.key === "Enter") event.preventDefault();
+  };
+
+  return (
+    ...
+        <form
+            onSubmit={handleSubmit(onValid)}
+            onKeyDown={(event) => checkKeyDown(event)}
+            // onKeyDown 으로 엔터키 사용 x
+        >
+    ...
+  )
+```
+
+<br/>
+<img src="md_resources/resource_38.png" height="250"/>
+<br/>
