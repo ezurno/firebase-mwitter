@@ -74,6 +74,23 @@ export default function Home({ userObj }) {
     // onValid 통과시 input 을 비워주는 함수
   };
 
+  const onFileChange = (event) => {
+    // console.log(event.target.files);
+    const {
+      target: { files },
+    } = event;
+
+    const theFile = files[0];
+    const reader = new FileReader();
+    // FileReader 는 업로드한 파일을 읽어올 수 있는 class
+
+    reader.onloadend = (finishedEvent) => {
+      console.log(finishedEvent);
+    };
+
+    reader.readAsDataURL(theFile);
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
@@ -83,6 +100,7 @@ export default function Home({ userObj }) {
           })}
           placeholder="chatting"
         />
+        <input type="file" accept="image/*" onChange={onFileChange} />
         <button>Submit</button>
       </form>
 
