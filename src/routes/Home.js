@@ -8,7 +8,7 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Home({ userObj }) {
@@ -23,6 +23,8 @@ export default function Home({ userObj }) {
   } = useForm();
 
   const [mweets, setMweets] = useState([]);
+  const [attachment, setAttachment] = useState();
+  const fileInput = useRef();
 
   // const getMweets = async () => {
   //   const dbMweets = await getDocs(collection(dbService, "mweets"));
@@ -85,10 +87,19 @@ export default function Home({ userObj }) {
     // FileReader 는 업로드한 파일을 읽어올 수 있는 class
 
     reader.onloadend = (finishedEvent) => {
-      console.log(finishedEvent);
+      // console.log(finishedEvent);
+
+      setAttachment(finishedEvent.target.result);
     };
 
-    reader.readAsDataURL(theFile);
+    if (theFile) {
+      reader.readAsDataURL(theFile);
+    }
+  };
+
+  const onClearAttachment = () => {
+    setAttachment(null);
+    fileInput.current.value = null;
   };
 
   return (
@@ -100,8 +111,20 @@ export default function Home({ userObj }) {
           })}
           placeholder="chatting"
         />
-        <input type="file" accept="image/*" onChange={onFileChange} />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={onFileChange}
+          ref={fileInput}
+        />
         <button>Submit</button>
+
+        {attachment && (
+          <div>
+            <img src={attachment} width="50px" height="50px" />
+            <button onClick={onClearAttachment}>Clear image</button>
+          </div>
+        )}
       </form>
 
       <div>
