@@ -774,3 +774,96 @@ export default function Mweet({ mweetObj, isOwner }) {
 <br/>
 <img src="md_resources/resource_38.png" height="250"/>
 <br/>
+
+<br/>
+<br/>
+<hr/>
+
+###### 20230601
+
+> ## File-Upload
+
+<br/>
+
+- 파일을 업로드 하기 위해 `Firebase` 내에 있는 `Storage` 를 사용할 예정
+- `fileReader()` 를 사용해 업로드 한 이미지 파일의 `url` 을 얻을 수 있음
+- `FileReader` 는 data 의 url 로 이미지를 보여줄 수 있음
+
+<br/>
+
+```JS
+//Home.js
+
+  const onFileChange = (event) => {
+    // console.log(event.target.files);
+    const {
+      target: { files },
+    } = event;
+
+    const theFile = files[0];
+    // 파일을 업로드 시 files[] 리스트 형식으로 값을 저장함
+
+    const reader = new FileReader();
+    // FileReader 는 업로드한 파일을 읽어올 수 있는 class
+
+    reader.onloadend = (finishedEvent) => {
+      console.log(finishedEvent);
+
+      setAttachment(finishedEvent.target.result);
+    };
+
+    if (theFile) {
+      reader.readAsDataURL(theFile);
+    } // 저장한 값이 있을 경우에만 data의 url 을 받아옴
+  };
+```
+
+<br/>
+<img src="md_resources/resource_39.png" width="400"/>
+<br/>
+
+파일 명이 출력되는 것을 보아 정상적으로 업로드 된 것을 확인 할 수 있음
+
+<br/>
+<img src="md_resources/resource_40.png" width="400"/>
+<br/>
+
+`console.log(event.target.files)` 로 input-file 을 업로드 했을 때 onChange 로
+
+event 를 console 에 찍어 보면 event.target.files 에 list 형식으로 파일들을 보관함
+
+<br/>
+<img src="md_resources/resource_41.png" width="200"/>
+<br/>
+
+<br/>
+<img src="md_resources/resource_42.png" width="400"/>
+<br/>
+
+```JS
+    reader.onloadend = (finishedEvent) => {
+      console.log(finishedEvent);
+
+      setAttachment(finishedEvent.target.result);
+    };
+```
+
+내에서 console.log 를 출력 시 **img-file** 을 **url 로 보관하고 있는 것**을 볼 수 있음
+
+<br/>
+
+```JS
+// useRef로 input 의 ref 를 먼저 주어야 함
+  const onClearAttachment = () => {
+    setAttachment(null);
+    fileInput.current.value = null;
+  }; // 이미지 업로드 완료 시 setAttachMent 와 이미지파일 명을 지우는 함수
+```
+
+<br/>
+
+<br/>
+<img src="md_resources/resource_43.png" width="400"/>
+<br/>
+
+직접 그린 귀여운 펭귄 이미지가 정상적으로 업로드 된 것을 볼 수 있음
