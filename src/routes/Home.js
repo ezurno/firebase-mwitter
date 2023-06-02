@@ -1,5 +1,5 @@
 import Mweet from "components/Mweet";
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 import {
   addDoc,
   collection,
@@ -8,8 +8,10 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
+import { ref, uploadString } from "firebase/storage";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Home({ userObj }) {
   // console.log(userObj);
@@ -60,19 +62,29 @@ export default function Home({ userObj }) {
   }, []);
 
   const onValid = async (data) => {
-    // console.log(data.chat);
-    try {
-      const docRef = await addDoc(collection(dbService, "mweets"), {
-        text: data.chat,
-        createdAt: Date.now(),
-        creatorId: userObj.uid,
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
+    /**
+     * 업로드한 파일에 대해 reference 를 부여하는 방법
+     * storageService.ref().child();
+     */
+    const fileRef = ref(storageService, `${userObj.uid}/${uuidv4()}`);
+    // uuid 는 특정 랜덤한 변수를 생성해주는 ㅎ함수
+    const response = await uploadString(fileRef, attachment, "data_url");
+    // upload 를 String 형식으로 업로드, fileRef 와 url, "data_url" 형식
 
-    setValue("chat", "");
+    console.log(response);
+
+    // console.log(data.chat);
+    // try {
+    //   const docRef = await addDoc(collection(dbService, "mweets"), {
+    //     text: data.chat,
+    //     createdAt: Date.now(),
+    //     creatorId: userObj.uid,
+    //   });
+    //   console.log("Document written with ID: ", docRef.id);
+    // } catch (error) {
+    //   console.error("Error adding document: ", error);
+    // }
+    // setValue("chat", "");
     // onValid 통과시 input 을 비워주는 함수
   };
 
