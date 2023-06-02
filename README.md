@@ -867,3 +867,144 @@ event 를 console 에 찍어 보면 event.target.files 에 list 형식으로 파
 <br/>
 
 직접 그린 귀여운 펭귄 이미지가 정상적으로 업로드 된 것을 볼 수 있음
+
+<br/>
+<br/>
+<hr/>
+
+###### 20230602
+
+> ## 파일 Url 과 랜덤한 파일명 지정
+
+<br/>
+
+- 파일을 업로드 시 파일의 고유 **URL** 이 존재함
+- firebase 의 storage 에 파일을 저장하기 위해 `firebase > storage > start`
+- file 의 reference 를 지정하기 위해 ref 함수 사용
+- url 을 기존 string 형태로 저장하고 있으므로 `uploadString` 함수로 불러서 사용 `uploadString(ref, url, type)`
+- `npm install uuid` 를 사용해 파일명을 **특정 랜덤 변수**로 저장함
+
+<br/>
+
+```JS
+// Home.js
+
+const onValid = async (data) => {
+    /**
+     * 업로드한 파일에 대해 reference 를 부여하는 방법
+     * storageService.ref().child();
+     */
+    const fileRef = ref(storageService, `${userObj.uid}/${uuidv4()}`);
+    // uuid 는 특정 랜덤한 변수를 생성해주는 ㅎ함수
+    // 파일의 레퍼런스를 storageService 내 유저 id 로 만든 폴더 아래 랜덤한 변수명으로 저장
+
+    const response = await uploadString(fileRef, attachment, "data_url");
+    // upload 를 String 형식으로 업로드, fileRef 와 url, "data_url" 형식
+    console.log(response);
+}
+
+/////////////////
+
+// fbase.js
+import { getStorage } from "firebase/storage";
+
+export const storageService = getStorage();
+```
+
+<br/>
+<img src="md_resources/resource_44.png" width="400"/>
+<br/>
+
+**console.log(response)** 를 를 찍어보면 해당 값 안에 고유 url 이 들어있음
+
+<br/>
+<img src="md_resources/resource_45.png" width="400"/>
+<br/>
+
+미리보기가 정상적으로 작동하는 모습
+
+<br/>
+<p>
+<img src="md_resources/resource_46.png" height="150"/>
+<img src="md_resources/resource_47.png" height="150"/>
+<p/>
+<br/>
+
+해당하는 유저의 id 로 폴더 생성
+
+폴더 안에는 랜덤한 변수 명으로 이미지 파일이 저장되어 있음
+
+해당 url 에 접근하기 위해 firebase 의 함수 `getDownloadURL()` 함수를 사용 할 예정
+
+<br/>
+
+> ## getDownloadURL()
+
+<br/>
+
+- `getDownloadURL()` 은 이미지의 **url** 소스를 따서 사용할 수 있게 해줌
+- response 의 `reference` 를 주어 **url** 을 받아와 attachment 가 **""** 이 아닐 경우 새 object 에 **attachmentUrl** 을 담아 전달
+- 그 이후 form 의 value 가 남아있지 않게 `onClearAttachment()` 실행
+- 자세한 사항은 [공식문서 참고](https://firebase.google.com/docs/reference/js/v8/firebase.storage.Reference#getdownloadurl)
+
+<br/>
+<img src="md_resources/resource_48.png" width="500"/>
+<br/>
+
+```JS
+// Home.js
+
+  let attachmentUrl = await getDownloadURL(response.ref);
+  // response 값의 referense 로 getDownloadUrl 오청을 하며 해당 url 값을 변수로 저장
+  console.log(attachmentUrl);
+```
+
+<br/>
+
+```JS
+// Home.js
+
+  const onValid = async (data) => {
+    let attachmentUrl = "";
+    if (attachment != "") {
+      /**
+       * 업로드한 파일에 대해 reference 를 부여하는 방법
+       * storageService.ref().child();
+       */
+      const fileRef = ref(storageService, `${userObj.uid}/${uuidv4()}`);
+      // uuid 는 특정 랜덤한 변수를 생성해주는 ㅎ함수
+      const response = await uploadString(fileRef, attachment, "data_url");
+      // upload 를 String 형식으로 업로드, fileRef 와 url, "data_url" 형식
+      // console.log(await getDownloadURL(response.ref));
+      // https://firebase.google.com/docs/reference/js/v8/firebase.storage.Reference#getdownloadurl
+      attachmentUrl = await getDownloadURL(response.ref);
+    }
+    console.log(attachmentUrl);
+    const mweetPosting = {
+      text: data.chat,
+      createdAt: Date.now(),
+      creatorId: userObj.uid,
+      attachmentUrl,
+    };
+    await addDoc(collection(dbService, "mweets"), mweetPosting);
+    setValue("chat", "");
+    onClearAttachment();
+    // onValid 통과시 input 을 비워주는 함수
+  };
+```
+
+<br/>
+<img src="md_resources/resource_49.png" width="400"/>
+<br/>
+
+`getDownloadURL()` 으로 `storage` 에 적재 되어있는 img 에 접근하여 펭귄 그림을 보여주는 모습
+
+<br/>
+<img src="md_resources/resource_50.png" width="400"/>
+<br/>
+
+하지만 `storage` 를 찾아가보면 **이전에 만들었던 이미지 파일들이 지워지지 않고 그대로 남아있음**
+
+이대로 가면 **DB 에 무리가 가므로 지워주는 함수를 사용할 예정**
+
+( ⚠️ 계속해서 쌓이면 용량 초과 시 `firestore` 에서 요금을 내라하므로 주의 )
