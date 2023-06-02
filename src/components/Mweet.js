@@ -81,6 +81,9 @@ export default function Mweet({ mweetObj, isOwner }) {
       ) : (
         <>
           <h4>{mweetObj.text}</h4>
+          {mweetObj.attachmentUrl && (
+            <img src={mweetObj.attachmentUrl} width="50px" height="50px" />
+          )}
           {isOwner && (
             <>
               <button onClick={onDeleteClick}>Delete</button>
