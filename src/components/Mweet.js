@@ -1,5 +1,6 @@
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { deleteObject, ref } from "firebase/storage";
 import { useState } from "react";
 import { set, useForm } from "react-hook-form";
 
@@ -18,6 +19,7 @@ export default function Mweet({ mweetObj, isOwner }) {
   const onDeleteClick = async () => {
     const mweetTextRef = doc(dbService, "mweets", `${mweetObj.id}`);
     // 해당 Meets 의 References
+
     const ok = window.confirm("Are you sure you want to delete this mweet?");
     console.log(ok);
 
@@ -25,6 +27,13 @@ export default function Mweet({ mweetObj, isOwner }) {
       // delete mweet
       await deleteDoc(mweetTextRef);
       // delete 실행, 비동기 처리해야함
+      if (mweetObj.attachmentUrl !== "") {
+        const urlRef = ref(storageService, mweetObj.attachmentUrl);
+        // ref 를 사용하면 storage 에 url 이 일치하는 referernse 를 받아올 수 있음
+
+        await deleteObject(urlRef);
+        // 받아온 url 로 deleteObject 실행
+      } // attachmetUrl 이 존재할 시
     }
   };
 
