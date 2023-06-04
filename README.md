@@ -1008,3 +1008,58 @@ export const storageService = getStorage();
 이대로 가면 **DB 에 무리가 가므로 지워주는 함수를 사용할 예정**
 
 ( ⚠️ 계속해서 쌓이면 용량 초과 시 `firestore` 에서 요금을 내라하므로 주의 )
+
+<br/>
+<br/>
+<hr/>
+
+###### 20230604
+
+> ## ref()
+
+<br/>
+
+- 파일을 지우기 위해선 `ref` 가 필요
+- 해당하는 파일을 `url` 으로도 찾을 수 있음
+- `ref()` 함수를 사용하면 특정 service 에 접근해 **해당 url 과 일치**하는 데이터의 `ref` 를 받아옴
+
+<br/>
+
+```JS
+// Mweet.js
+
+  const onDeleteClick = async () => {
+    const mweetTextRef = doc(dbService, "mweets", `${mweetObj.id}`);
+    // 해당 Meets 의 References
+
+    const ok = window.confirm("Are you sure you want to delete this mweet?");
+    console.log(ok);
+
+    if (ok) {
+      // delete mweet
+      await deleteDoc(mweetTextRef);
+      // delete 실행, 비동기 처리해야함
+      if (mweetObj.attachmentUrl !== "") {
+        const urlRef = ref(storageService, mweetObj.attachmentUrl);
+        // ref 를 사용하면 storage 에 url 이 일치하는 referernse 를 받아올 수 있음
+
+        await deleteObject(urlRef);
+        // 받아온 url 로 deleteObject 실행
+      } // attachmetUrl 이 존재할 시
+    }
+  };
+```
+
+<br/>
+
+delete button 을 누르면 img-file 도 지우게 끔 설계
+
+해당 object 에 attachmentUrl 이 없으면 **(사진이 없으면) 실행**
+
+`ref()` 함수를 사용해 **storage 에 해당 url 이 존재하는 파일의 referense 를 받아옴** > 해당 경로로 **파일 삭제**
+
+<br/>
+<img src="md_resources/resource_51.png" height="80"/>
+<br/>
+
+정상적으로 지워짐
