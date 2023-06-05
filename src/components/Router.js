@@ -10,7 +10,7 @@ const useRouter = (isLogin, userObj) => {
       path: "/",
       element: isLogin ? (
         <>
-          <Navigation />
+          <Navigation userObj={userObj} />
           <Home userObj={userObj} />
         </>
       ) : (
@@ -30,7 +30,7 @@ const useRouter = (isLogin, userObj) => {
       path: "/profile",
       element: (
         <>
-          {isLogin ? <Navigation /> : null}
+          {isLogin ? <Navigation userObj={userObj} /> : null}
           <Profile userObj={userObj} />
         </>
       ),

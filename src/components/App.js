@@ -18,6 +18,12 @@ export default function App() {
       if (user) {
         setIsLogin(true);
         setUserObj(user);
+        if (user.displayName === null) {
+          const name = user.email.split("@")[0];
+          user.displayName = name;
+          // E-mail 로그인 시 displayName 이 없으므로
+          // 해당하는 이메일의 아이디를 displayName 으로 지정해줌
+        }
       } else {
         setIsLogin(false);
       }
