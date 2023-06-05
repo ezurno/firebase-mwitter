@@ -4,7 +4,7 @@ import Home from "../routes/Home";
 import Profile from "../routes/Profile";
 import Navigation from "./Navigation";
 
-const useRouter = (isLogin, userObj) => {
+const useRouter = (isLogin, userObj, refreshUser) => {
   const router = createBrowserRouter([
     {
       path: "/",
@@ -31,7 +31,7 @@ const useRouter = (isLogin, userObj) => {
       element: (
         <>
           {isLogin ? <Navigation userObj={userObj} /> : null}
-          <Profile userObj={userObj} />
+          <Profile userObj={userObj} refreshUser={refreshUser} />
         </>
       ),
     },
@@ -40,8 +40,8 @@ const useRouter = (isLogin, userObj) => {
   return router;
 };
 
-export default function Router({ isLogin, userObj }) {
-  const router = useRouter(isLogin, userObj);
+export default function Router({ isLogin, userObj, refreshUser }) {
+  const router = useRouter(isLogin, userObj, refreshUser);
 
   return <RouterProvider router={router} />;
 }

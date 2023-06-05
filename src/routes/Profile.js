@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 
-export default function Profile({ userObj }) {
+export default function Profile({ userObj, refreshUser }) {
   const nav = useNavigate();
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
 
@@ -39,7 +39,10 @@ export default function Profile({ userObj }) {
   const onSubmit = async (event) => {
     event.preventDefault();
     if (userObj.displayName !== newDisplayName) {
-      await updateProfile(userObj, { displayName: newDisplayName });
+      await updateProfile(await authService.currentUser, {
+        displayName: newDisplayName,
+      });
+      refreshUser();
     }
   };
 
