@@ -1157,3 +1157,61 @@ delete button 을 누르면 img-file 도 지우게 끔 설계
 ```
 
 <br/>
+
+> ## flexible Rerendering
+
+<br/>
+
+- **react** 는 **rerendering** 에 특화되어 있지만 **무거운 Object 형식의 값이 조금 바뀐것은 감지하기 힘듦**
+- 따라서 사용할 Object 만 나눠서 **새 Object 로 관리해주는 것이 용이**함
+- 사용할 `field` 값만 잘라 새 오브젝트를 만든 후 `refreshUser` 함수로 연결해 **변경사항을 감지**해줄 수 있게 만듦
+
+<br/>
+
+```JS
+// App.js
+
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLogin(true);
+        setUserObj({
+          displayName: user.displayName,
+          uid: user.uid,
+          updateProfile: (args) =>
+            updateProfile(user, { displayName: user.displayName }),
+        });
+        // setUserObj 를 새로운 object 로 만들어 줌
+
+        if (user.displayName === null) {
+          const name = user.email.split("@")[0];
+          user.displayName = name;
+          // E-mail 로그인 시 displayName 이 없으므로
+          // 해당하는 이메일의 아이디를 displayName 으로 지정해줌
+        }
+      } else {
+        setIsLogin(false);
+      }
+      setInit(true);
+    });
+  }, []);
+
+  const refreshUser = () => {
+    const user = authService.currentUser;
+    // 현재 User 의 값을 user에 다시 담음
+
+    setUserObj({
+      displayName: user.displayName,
+      uid: user.uid,
+      updateProfile: (args) =>
+        updateProfile(user, { displayName: user.displayName }),
+    }); // 다시 값을 firestore에서 가져와 적재
+  };
+```
+
+<br/>
+<img src="md_resources/resource_54.png" width="250"/>
+<br/>
+
+이름 값을 바꿔보면 즉각적으로 바뀌는 모습을 볼 수 있음

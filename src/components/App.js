@@ -12,8 +12,6 @@ export default function App() {
 
   const [userObj, setUserObj] = useState(null);
 
-  const [newName, setNewName] = useState("");
-
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
