@@ -1063,3 +1063,97 @@ delete button 을 누르면 img-file 도 지우게 끔 설계
 <br/>
 
 정상적으로 지워짐
+
+<br/>
+<br/>
+<hr/>
+
+###### 20230605
+
+> ## 특정 회원의 데이터 관리
+
+<br/>
+
+- 특정 회원의 데이터를 관리하기 위해서는 `firebase` 에서는 새로운 `query` 값을 사용해야 함
+- `where()` 를 사용해 해당 **collection** 내 **field** 값과 **특정 값의 데이터를 비교할 수 있음**
+
+<br/>
+
+```JS
+  const getMyMweets = async () => {
+    const myQuery = query(
+      collection(dbService, "mweets"),
+      where("creatorId", "==", userObj.uid)
+    );
+    // 새로운 query 를 생성
+
+    const querySnapshot = await getDocs(myQuery);
+    // 해당 query 에 일치하는 Documents 값을 가져옴
+
+    querySnapshot.forEach((doc) => {
+      console.log(doc);
+    });
+    // 가져온 documents 를 forEach 문으로 일일히 console.log
+  };
+
+  useEffect(() => {
+    getMyMweets();
+  }, []);
+```
+
+<br/>
+<p>
+<img src="md_resources/resource_52.png" width="400"/>
+<img src="md_resources/resource_53.png" width="400"/>
+<p/>
+<br/>
+
+`console.log(doc)` 으로 찍어보면 해당 값을 제대로 찾아온 것을 볼 수 있음
+
+<br/>
+
+> ## Profile 에 Username 넣기
+
+<br/>
+
+- `user` 의 이름을 변경하는 함수 생성
+- **Navigation** 에 `userObj` 로 유저정보를 넘겨줌
+- `updateProfile()` 함수를 사용해 해당 **object** 의 특정 필드를 수정해줌
+
+<br/>
+
+```JS
+// Profile.js
+
+  const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+  // 변경한 이름 값을 저장할 state
+
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewDisplayName(value);
+  };
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    if (userObj.displayName !== newDisplayName) {
+      await updateProfile(userObj, { displayName: newDisplayName });
+    }
+  };
+
+// App.js
+      if (user) {
+        setIsLogin(true);
+        setUserObj(user);
+        if (user.displayName === null) {
+          const name = user.email.split("@")[0];
+          user.displayName = name;
+          // E-mail 로그인 시 displayName 이 없으므로
+          // 해당하는 이메일의 아이디를 displayName 으로 지정해줌
+        }
+      } else {
+        setIsLogin(false);
+      }
+```
+
+<br/>
