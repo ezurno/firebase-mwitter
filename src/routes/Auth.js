@@ -10,43 +10,11 @@ import {
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { authService, firebaseInstance } from "fbase";
+import AuthForm from "components/AuthForm";
+import SignForm from "components/SignForm";
 
 export default function Auth() {
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm();
-
-  const {
-    register: signRegister,
-    handleSubmit: signHandleSubmit,
-    setError: signSetError,
-    formState: { errors: signErrors },
-  } = useForm();
-
   const [resError, setResError] = useState("");
-
-  const onLoginValid = async (data) => {
-    try {
-      const auth = getAuth();
-      await signInWithEmailAndPassword(auth, data.loginId, data.loginPw);
-    } catch (error) {
-      console.log(error.message);
-      setResError(error.message.replace("Firebase: Error", ""));
-    }
-  };
-
-  const onSignUpValid = async (data) => {
-    try {
-      const auth = getAuth();
-      await createUserWithEmailAndPassword(auth, data.signUpId, data.signUpPw);
-    } catch (error) {
-      console.log(error.message.replace("Firebase:", ""));
-      setResError(error.message);
-    }
-  };
 
   const onSocialClick = async (event) => {
     const {
@@ -63,37 +31,7 @@ export default function Auth() {
 
   return (
     <div>
-      <form
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "250px",
-        }}
-        onSubmit={handleSubmit(onLoginValid)}
-      >
-        <input
-          {...register("loginId", {
-            required: "아이디를 작성해야 합니다.",
-          })}
-          placeholder="아이디"
-        />
-        <span>{errors?.loginId?.message}</span>
-        <input
-          {...register("loginPw", {
-            required: "비밀번호를 작성해야 합니다.",
-            minLength: {
-              value: 2,
-              message: "비밀번호가 너무 짧습니다.",
-            },
-          })}
-          placeholder="비밀번호"
-          type="password"
-          autoComplete="off"
-        />
-        <span>{errors?.loginPw?.message}</span>
-
-        <button>확인</button>
-      </form>
+      <AuthForm setResError={setResError} />
 
       <div>
         <button onClick={onSocialClick} name="google">
@@ -104,37 +42,8 @@ export default function Auth() {
         </button>
       </div>
 
-      <form
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "250px",
-        }}
-        onSubmit={signHandleSubmit(onSignUpValid)}
-      >
-        <input
-          {...signRegister("signUpId", {
-            required: "아이디를 작성해야 합니다.",
-          })}
-          placeholder="아이디"
-        />
-        <span>{signErrors?.signUpId?.message}</span>
-        <input
-          {...signRegister("signUpPw", {
-            required: "비밀번호를 작성해야 합니다.",
-            minLength: {
-              value: 5,
-              message: "비밀번호가 너무 짧습니다.",
-            },
-          })}
-          placeholder="비밀번호"
-          type="password"
-          autoComplete="off"
-        />
-        <span>{signErrors?.signUpPw?.message}</span>
+      <SignForm setResError={setResError} />
 
-        <button>확인</button>
-      </form>
       <p>{resError}</p>
     </div>
   );
