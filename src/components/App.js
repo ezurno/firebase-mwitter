@@ -32,7 +32,6 @@ export default function App() {
         }
       } else {
         setIsLogin(false);
-        setUserObj(null);
       }
       setInit(true);
     });

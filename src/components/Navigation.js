@@ -8,7 +8,9 @@ export default function Navigation({ userObj }) {
       </li>
       <li>
         <Link to={"/profile"}>
-          {userObj && `${userObj.displayName}의 `}Profile
+          {userObj?.displayName?.length
+            ? `${userObj.displayName}'s Profile`
+            : "Profile"}
         </Link>
       </li>
     </ul>

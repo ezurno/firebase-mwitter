@@ -6,7 +6,9 @@ import { updateProfile } from "firebase/auth";
 
 export default function Profile({ userObj, refreshUser }) {
   const nav = useNavigate();
-  const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+  const [newDisplayName, setNewDisplayName] = useState(
+    userObj.displayName ?? ""
+  );
 
   const onLogOutClick = () => {
     authService.signOut();
