@@ -11,10 +11,32 @@ const useRouter = (isLogin, userObj, refreshUser) => {
       element: isLogin ? (
         <>
           <Navigation userObj={userObj} />
-          <Home userObj={userObj} />
+          <div
+            style={{
+              maxWidth: 890,
+              width: "100%",
+              margin: "0 auto",
+              marginTop: 80,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Home userObj={userObj} />
+          </div>
         </>
       ) : (
-        <Auth />
+        <div
+          style={{
+            maxWidth: 890,
+            width: "100%",
+            margin: "0 auto",
+            marginTop: 80,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Auth />
+        </div>
       ),
     },
     // {
@@ -31,7 +53,18 @@ const useRouter = (isLogin, userObj, refreshUser) => {
       element: (
         <>
           {isLogin ? <Navigation userObj={userObj} /> : null}
-          <Profile userObj={userObj} refreshUser={refreshUser} />
+          <div
+            style={{
+              maxWidth: 890,
+              width: "100%",
+              margin: "0 auto",
+              marginTop: 80,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Profile userObj={userObj} refreshUser={refreshUser} />
+          </div>
         </>
       ),
     },

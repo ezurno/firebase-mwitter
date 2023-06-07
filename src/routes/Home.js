@@ -36,9 +36,9 @@ export default function Home({ userObj }) {
   }, []);
 
   return (
-    <>
+    <div className="container">
       <MweetFactory userObj={userObj} />
-      <div>
+      <div style={{ marginTop: 30 }}>
         {mweets.map((data) => (
           <Mweet
             key={data.id}
@@ -47,6 +47,6 @@ export default function Home({ userObj }) {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }

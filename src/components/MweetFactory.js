@@ -11,6 +11,8 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 export default function MweetFactory({ userObj }) {
   const {
@@ -92,25 +94,47 @@ export default function MweetFactory({ userObj }) {
     <form
       onSubmit={handleSubmit(onValid)}
       onKeyDown={(event) => checkKeyDown(event)}
+      className="factoryForm"
     >
+      <div className="factoryInput__container">
+        <input
+          {...register("chat", {
+            required: "내용을 작성해 주세요.",
+          })}
+          placeholder="What's on your mind?"
+          maxLength={120}
+          className="factoryInput__input"
+        />
+
+        <input type="submit" value="&rarr;" className="factoryInput__arrow" />
+      </div>
+      <label htmlFor="attach-file" className="factoryInput__label">
+        <span>Add photos</span>
+        <FontAwesomeIcon icon={faPlus} />
+      </label>
       <input
-        {...register("chat", {
-          required: "내용을 작성해 주세요.",
-        })}
-        placeholder="chatting"
-      />
-      <input
+        id="attach-file"
         type="file"
         accept="image/*"
         onChange={onFileChange}
         ref={fileInput}
+        style={{
+          opacity: 0,
+        }}
       />
-      <button>Submit</button>
 
       {attachment && (
-        <div>
-          <img src={attachment} width="50px" height="50px" />
-          <button onClick={onClearAttachment}>Clear image</button>
+        <div className="factoryForm__attachment">
+          <img
+            src={attachment}
+            style={{
+              backgroundImage: attachment,
+            }}
+          />
+          <div className="factoryForm__clear" onClick={onClearAttachment}>
+            <span>Remove</span>
+            <FontAwesomeIcon icon={faTimes} />
+          </div>
         </div>
       )}
     </form>

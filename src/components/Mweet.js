@@ -3,6 +3,8 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import { useState } from "react";
 import { set, useForm } from "react-hook-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default function Mweet({ mweetObj, isOwner }) {
   const [editing, setEditing] = useState(false);
@@ -65,42 +67,49 @@ export default function Mweet({ mweetObj, isOwner }) {
   };
 
   return (
-    <>
+    <div className="nweet">
       {editing ? (
         <>
           <form
             onSubmit={handleSubmit(onValid)}
             onKeyDown={(event) => checkKeyDown(event)}
+            className="container nweetEdit"
           >
             <input
               {...register("newMweet", {
                 required: "please write your comment.",
               })}
+              autoFocus
               type="text"
               placeholder="Edit your comment."
               value={targetValue}
               onChange={onChangeMweet}
+              className="formInput"
             />
 
             <span>{errors?.newMweet?.message}</span>
-            <button>Edit</button>
+            <button className="formBtn">Edit</button>
           </form>
-          <button onClick={toggleEditing}>Cancel</button>
+          <button onClick={toggleEditing} className="formBtn cancelBtn">
+            Cancel
+          </button>
         </>
       ) : (
         <>
           <h4>{mweetObj.text}</h4>
-          {mweetObj.attachmentUrl && (
-            <img src={mweetObj.attachmentUrl} width="50px" height="50px" />
-          )}
+          {mweetObj.attachmentUrl && <img src={mweetObj.attachmentUrl} />}
           {isOwner && (
-            <>
-              <button onClick={onDeleteClick}>Delete</button>
-              <button onClick={toggleEditing}>Edit</button>
-            </>
+            <div className="nweet__actions">
+              <span onClick={onDeleteClick}>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
+              <span onClick={toggleEditing}>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </span>
+            </div>
           )}
         </>
       )}
-    </>
+    </div>
   );
 }

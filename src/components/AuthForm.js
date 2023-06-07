@@ -21,15 +21,9 @@ export default function AuthForm({ setResError }) {
   };
 
   return (
-    <form
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "250px",
-      }}
-      onSubmit={handleSubmit(onLoginValid)}
-    >
+    <form className="container" onSubmit={handleSubmit(onLoginValid)}>
       <input
+        className="authInput"
         {...register("loginId", {
           required: "아이디를 작성해야 합니다.",
         })}
@@ -37,6 +31,7 @@ export default function AuthForm({ setResError }) {
       />
       <span>{errors?.loginId?.message}</span>
       <input
+        className="authInput"
         {...register("loginPw", {
           required: "비밀번호를 작성해야 합니다.",
           minLength: {
@@ -48,9 +43,10 @@ export default function AuthForm({ setResError }) {
         type="password"
         autoComplete="off"
       />
-      <span>{errors?.loginPw?.message}</span>
+      <span className="authError">{errors?.loginPw?.message}</span>
 
-      <button>확인</button>
+      <button className="authSwitch">확인</button>
     </form>
   );
 }
+const inputStyles = {};
