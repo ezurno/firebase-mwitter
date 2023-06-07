@@ -21,32 +21,36 @@ export default function AuthForm({ setResError }) {
   };
 
   return (
-    <form className="container" onSubmit={handleSubmit(onLoginValid)}>
-      <input
-        className="authInput"
-        {...register("loginId", {
-          required: "아이디를 작성해야 합니다.",
-        })}
-        placeholder="아이디"
-      />
-      <span>{errors?.loginId?.message}</span>
-      <input
-        className="authInput"
-        {...register("loginPw", {
-          required: "비밀번호를 작성해야 합니다.",
-          minLength: {
-            value: 2,
-            message: "비밀번호가 너무 짧습니다.",
-          },
-        })}
-        placeholder="비밀번호"
-        type="password"
-        autoComplete="off"
-      />
-      <span className="authError">{errors?.loginPw?.message}</span>
+    <>
+      <form className="container" onSubmit={handleSubmit(onLoginValid)}>
+        <input
+          className="authInput"
+          {...register("loginId", {
+            required: "아이디를 작성해야 합니다.",
+          })}
+          placeholder="아이디"
+        />
+        <input
+          className="authInput"
+          {...register("loginPw", {
+            required: "비밀번호를 작성해야 합니다.",
+            minLength: {
+              value: 2,
+              message: "비밀번호가 너무 짧습니다.",
+            },
+          })}
+          placeholder="비밀번호"
+          type="password"
+          autoComplete="off"
+        />
 
-      <button className="authSwitch">확인</button>
-    </form>
+        <input type="submit" className="authSwitch" value="확인" />
+        <span className="authError">
+          {errors?.loginId?.message
+            ? errors?.loginId?.message
+            : errors?.loginPw?.message}
+        </span>
+      </form>
+    </>
   );
 }
-const inputStyles = {};

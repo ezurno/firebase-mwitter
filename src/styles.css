@@ -213,12 +213,13 @@ form {
 .authContainer {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 80vh;
   justify-content: center;
   align-items: center;
 }
 
 .authBtns {
+  margin-top: 30px;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -228,13 +229,24 @@ form {
 .authBtn {
   cursor: pointer;
   border-radius: 20px;
-  border: none;
+  border: 1px color white;
   padding: 10px 0px;
   font-size: 12px;
   text-align: center;
   width: 150px;
   background: white;
   cursor: pointer;
+  transition: background-color 0.3s linear, color 0.3s linear;
+}
+
+#google:hover {
+  color: white;
+  background-color: red;
+}
+
+#github:hover {
+  color: white;
+  background-color: black;
 }
 
 /* AuthForm */
@@ -266,11 +278,27 @@ form {
 }
 
 .authSwitch {
-  color: #04aaff;
-  cursor: pointer;
+  color: white;
   margin-top: 10px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
+  background-color: #04aaff;
   display: block;
   font-size: 12px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 15px;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.authSwitch:hover {
+  cursor: pointer;
+  background-color: black;
+  color: #04aaff;
+}
+
+.signUpBtn {
+  margin-top: 20px;
   text-decoration: underline;
+  color: #04aaff;
+  cursor: pointer;
 }

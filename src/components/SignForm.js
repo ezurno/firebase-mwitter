@@ -21,21 +21,15 @@ export default function SignForm({ setResError }) {
   };
 
   return (
-    <form
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "250px",
-      }}
-      onSubmit={signHandleSubmit(onSignUpValid)}
-    >
+    <form className="container" onSubmit={signHandleSubmit(onSignUpValid)}>
       <input
         {...signRegister("signUpId", {
           required: "아이디를 작성해야 합니다.",
         })}
         placeholder="아이디"
+        className="authInput"
       />
-      <span>{signErrors?.signUpId?.message}</span>
+      <span className="authError">{signErrors?.signUpId?.message}</span>
       <input
         {...signRegister("signUpPw", {
           required: "비밀번호를 작성해야 합니다.",
@@ -47,8 +41,9 @@ export default function SignForm({ setResError }) {
         placeholder="비밀번호"
         type="password"
         autoComplete="off"
+        className="authInput"
       />
-      <span>{signErrors?.signUpPw?.message}</span>
+      <span className="authError">{signErrors?.signUpPw?.message}</span>
 
       <button>확인</button>
     </form>

@@ -46,14 +46,26 @@ export default function Auth() {
       />
       <AuthForm setResError={setResError} />
       <div className="authBtns">
-        <button onClick={onSocialClick} name="google" className="authBtn">
+        <button
+          onClick={onSocialClick}
+          name="google"
+          className="authBtn"
+          id="google"
+        >
           Continue with Google <FontAwesomeIcon icon={faGoogle} />
         </button>
-        <button onClick={onSocialClick} name="github" className="authBtn">
+        <button
+          onClick={onSocialClick}
+          name="github"
+          className="authBtn"
+          id="github"
+        >
           Continue with Github <FontAwesomeIcon icon={faGithub} />
         </button>
       </div>
-      <SignForm setResError={setResError} />
+
+      <h1 className="signUpBtn">Sign Up</h1>
+      {/* <SignForm setResError={setResError} />/ */}
       <p>{resError}</p>
     </div>
   );
