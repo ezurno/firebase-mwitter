@@ -302,3 +302,16 @@ form {
   color: #04aaff;
   cursor: pointer;
 }
+
+.headLine {
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+
+.comportText {
+  margin-top: 30px;
+  border-top: 1px solid white;
+  padding-top: 15px;
+  width: 100%;
+  text-align: center;
+}

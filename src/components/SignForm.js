@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export default function SignForm({ setResError }) {
   const {
@@ -10,10 +11,13 @@ export default function SignForm({ setResError }) {
     formState: { errors: signErrors },
   } = useForm();
 
+  const nav = useNavigate();
+
   const onSignUpValid = async (data) => {
     try {
       const auth = getAuth();
       await createUserWithEmailAndPassword(auth, data.signUpId, data.signUpPw);
+      await nav("/");
     } catch (error) {
       console.log(error.message.replace("Firebase:", ""));
       setResError(error.message);
@@ -45,7 +49,7 @@ export default function SignForm({ setResError }) {
       />
       <span className="authError">{signErrors?.signUpPw?.message}</span>
 
-      <button>확인</button>
+      <input type="submit" className="authSwitch" value="확인" />
     </form>
   );
 }

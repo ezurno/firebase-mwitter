@@ -1,3 +1,12 @@
+import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTwitter,
@@ -18,8 +27,21 @@ export default function Auth() {
 
   const nav = useNavigate();
 
-  const onMoveSignUp = () => {
-    nav("/login");
+  const onMoveHome = () => {
+    nav("/");
+  };
+
+  const onSocialClick = async (event) => {
+    const {
+      target: { name },
+    } = event;
+    let provider;
+    if (name === "google") {
+      provider = new GoogleAuthProvider();
+    } else if (name === "github") {
+      provider = new GithubAuthProvider();
+    }
+    await signInWithPopup(authService, provider);
   };
 
   return (
@@ -30,16 +52,17 @@ export default function Auth() {
         size="3x"
         style={{ marginBottom: 30 }}
       />
-      <h1 className="headLine">로그인</h1>
+      <h1 className="headLine">회원가입</h1>
 
-      <AuthForm setResError={setResError} />
+      <SignForm setResError={setResError} />
       <OtherLogin />
-
-      <h1 onClick={onMoveSignUp} className="signUpBtn">
-        회원가입
-      </h1>
-      {/* <SignForm setResError={setResError} />/ */}
       <span className="authError">{resError}</span>
+
+      <h1 onClick={onMoveHome} className="signUpBtn">
+        메인 화면으로
+      </h1>
+
+      {/* <SignForm setResError={setResError} />/ */}
     </div>
   );
 }
