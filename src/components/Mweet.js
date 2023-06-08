@@ -5,6 +5,14 @@ import { useState } from "react";
 import { set, useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
+
+const OwnerTitle = styled.h4`
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bolder;
+  color: ${(props) => (props.owner ? "#04aaff" : "white")};
+`;
 
 export default function Mweet({ mweetObj, isOwner }) {
   const [editing, setEditing] = useState(false);
@@ -67,49 +75,52 @@ export default function Mweet({ mweetObj, isOwner }) {
   };
 
   return (
-    <div className="nweet">
-      {editing ? (
-        <>
-          <form
-            onSubmit={handleSubmit(onValid)}
-            onKeyDown={(event) => checkKeyDown(event)}
-            className="container nweetEdit"
-          >
-            <input
-              {...register("newMweet", {
-                required: "please write your comment.",
-              })}
-              autoFocus
-              type="text"
-              placeholder="수정할 내용을 작성해 주세요."
-              value={targetValue}
-              onChange={onChangeMweet}
-              className="formInput"
-            />
+    <>
+      <OwnerTitle owner={isOwner}>{mweetObj.userName}</OwnerTitle>
+      <div className="nweet">
+        {editing ? (
+          <>
+            <form
+              onSubmit={handleSubmit(onValid)}
+              onKeyDown={(event) => checkKeyDown(event)}
+              className="container nweetEdit"
+            >
+              <input
+                {...register("newMweet", {
+                  required: "please write your comment.",
+                })}
+                autoFocus
+                type="text"
+                placeholder="수정할 내용을 작성해 주세요."
+                value={targetValue}
+                onChange={onChangeMweet}
+                className="formInput"
+              />
 
-            <span>{errors?.newMweet?.message}</span>
-            <button className="formBtn">수정하기</button>
-          </form>
-          <button onClick={toggleEditing} className="formBtn cancelBtn">
-            취소
-          </button>
-        </>
-      ) : (
-        <>
-          <h4>{mweetObj.text}</h4>
-          {mweetObj.attachmentUrl && <img src={mweetObj.attachmentUrl} />}
-          {isOwner && (
-            <div className="nweet__actions">
-              <span onClick={onDeleteClick}>
-                <FontAwesomeIcon icon={faTrash} />
-              </span>
-              <span onClick={toggleEditing}>
-                <FontAwesomeIcon icon={faPencilAlt} />
-              </span>
-            </div>
-          )}
-        </>
-      )}
-    </div>
+              <span>{errors?.newMweet?.message}</span>
+              <button className="formBtn">수정하기</button>
+            </form>
+            <button onClick={toggleEditing} className="formBtn cancelBtn">
+              취소
+            </button>
+          </>
+        ) : (
+          <>
+            <h4>{mweetObj.text}</h4>
+            {mweetObj.attachmentUrl && <img src={mweetObj.attachmentUrl} />}
+            {isOwner && (
+              <div className="nweet__actions">
+                <span onClick={onDeleteClick}>
+                  <FontAwesomeIcon icon={faTrash} />
+                </span>
+                <span onClick={toggleEditing}>
+                  <FontAwesomeIcon icon={faPencilAlt} />
+                </span>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </>
   );
 }

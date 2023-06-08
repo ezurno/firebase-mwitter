@@ -23,7 +23,7 @@ export default function Profile({ userObj, refreshUser }) {
 
     const querySnapshot = await getDocs(myQuery);
     querySnapshot.forEach((doc) => {
-      console.log(doc);
+      // console.log(doc);
     });
   };
 
@@ -40,6 +40,9 @@ export default function Profile({ userObj, refreshUser }) {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    if (newDisplayName == null || newDisplayName == "") {
+      return;
+    }
     if (userObj.displayName !== newDisplayName) {
       await updateProfile(await authService.currentUser, {
         displayName: newDisplayName,
@@ -64,7 +67,7 @@ export default function Profile({ userObj, refreshUser }) {
           placeholder="Update Profile"
           className="formBtn"
           style={{
-            marginTop: 16,
+            marginTop: "16px",
           }}
         />
       </form>

@@ -15,7 +15,7 @@ export default function App() {
 
   useEffect(() => {
     const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
         setIsLogin(true);
         setUserObj({
@@ -25,7 +25,7 @@ export default function App() {
             updateProfile(user, { displayName: user.displayName }),
         });
 
-        if (user.displayName === null) {
+        if (user.displayName === null || user.displayName === "") {
           const name = user.email.split("@")[0];
           user.displayName = name;
           // E-mail 로그인 시 displayName 이 없으므로
@@ -50,6 +50,16 @@ export default function App() {
 
   return (
     <>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossOrigin="true"
+      />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Monomaniac+One&display=swap"
+        rel="stylesheet"
+      />
       {init ? (
         <Router isLogin={isLogin} userObj={userObj} refreshUser={refreshUser} />
       ) : (

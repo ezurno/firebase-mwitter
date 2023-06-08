@@ -76,6 +76,7 @@ export default function MweetFactory({ userObj }) {
       createdAt: Date.now(),
       creatorId: userObj.uid,
       attachmentUrl,
+      userName: userObj.displayName,
     };
 
     await addDoc(collection(dbService, "mweets"), mweetPosting);

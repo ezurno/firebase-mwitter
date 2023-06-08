@@ -24,12 +24,6 @@ export default function Auth() {
 
   return (
     <div className="socialLogin">
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Monomaniac+One&display=swap"
-        rel="stylesheet"
-      />
       <div className="socialText">
         <h1
           style={{
