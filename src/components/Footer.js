@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <div className="footerMain">
       <div className="footerText">
-        <h1>&copy; {new Date().getFullYear()} Mwitter</h1>
+        <h1>&copy; {new Date().getFullYear()} Mwitter @ ezurno</h1>
       </div>
       <a href="https://github.com/ezurno?tab=repositories">
         <FontAwesomeIcon
