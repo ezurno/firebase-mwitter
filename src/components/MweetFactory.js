@@ -69,7 +69,7 @@ export default function MweetFactory({ userObj }) {
 
       attachmentUrl = await getDownloadURL(response.ref);
     }
-    console.log(attachmentUrl);
+    // console.log(attachmentUrl);
 
     const mweetPosting = {
       text: data.chat,

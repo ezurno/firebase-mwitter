@@ -1,6 +1,7 @@
+import { onAuthStateChanged } from "firebase/auth";
 import Mweet from "../components/Mweet";
 import MweetFactory from "../components/MweetFactory";
-import { dbService } from "../fbase";
+import { authService, dbService } from "../fbase";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
 
@@ -17,7 +18,7 @@ export default function Home({ userObj }) {
       orderBy("createdAt", "desc")
     );
 
-    onSnapshot(queryData, (snapshot) => {
+    const unsubscribe = onSnapshot(queryData, (snapshot) => {
       // console.log(snapshot.docs);
       const newArray = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -25,6 +26,12 @@ export default function Home({ userObj }) {
       }));
       // console.log(newArray);
       setMweets(newArray);
+    });
+
+    onAuthStateChanged(authService, (user) => {
+      if (user == null) {
+        unsubscribe();
+      }
     });
   }, []);
 
