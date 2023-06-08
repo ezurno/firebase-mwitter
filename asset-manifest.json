@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/firebase-mwitter/static/css/main.934fef48.css",
+    "main.js": "/firebase-mwitter/static/js/main.c4274130.js",
+    "index.html": "/firebase-mwitter/index.html",
+    "main.934fef48.css.map": "/firebase-mwitter/static/css/main.934fef48.css.map",
+    "main.c4274130.js.map": "/firebase-mwitter/static/js/main.c4274130.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.934fef48.css",
+    "static/js/main.c4274130.js"
+  ]
+}
