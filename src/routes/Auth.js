@@ -30,7 +30,7 @@ export default function Auth() {
             fontFamily: "Monomaniac One",
           }}
         >
-          Mwitter
+          Mwitter.
         </h1>
 
         <h2>환영합니다</h2>

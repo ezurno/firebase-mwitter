@@ -1215,3 +1215,67 @@ delete button 을 누르면 img-file 도 지우게 끔 설계
 <br/>
 
 이름 값을 바꿔보면 즉각적으로 바뀌는 모습을 볼 수 있음
+
+<br/>
+<br/>
+<hr/>
+
+###### 20230608
+
+> ## CSS 추가하기
+
+<br/>
+
+- 메인화면, 로그인, 프로필 창을 각각 개성있게 CSS 작업을 해주었음
+- `styled-components` 의 버전이 업데이트 되면서 `npm install styled-components` 가 오류가 나는 error 발생
+- `npm install styled-components@5.3.10` 으로 해결 [링크 참고](https://luminous24.tistory.com/269)
+
+<br/>
+<img src="md_resources/resource_56.png" width="600"/>
+<br/>
+
+로그인 화면의 모습
+
+<br/>
+<img src="md_resources/resource_57.png" width="360"/>
+<br/>
+
+메인 화면의 모습
+
+작성자와 로그인 한 계정이 같으면 color 를 변경해주었음
+
+<br/>
+
+```JS
+//Mweet.js
+
+const OwnerTitle = styled.h4`
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bolder;
+  color: ${(props) => (props.owner ? "#04aaff" : "white")};
+`;
+
+...
+
+return (
+  <>
+    <OwnerTitle owner={isOwner}>{mweetObj.userName}</OwnerTitle>
+  ...
+  </>
+)
+```
+
+<br/>
+<img src="md_resources/resource_58.png" width="360"/>
+<br/>
+
+프로필 수정 화면
+
+해당화면에서 로그아웃 및 유저의 닉네임을 변경할 수 있음
+
+<br/>
+<img src="md_resources/resource_55.png" width="400"/>
+<br/>
+
+직접 그린 펭귄 .ico 파일을 `favicon` 으로 대체
