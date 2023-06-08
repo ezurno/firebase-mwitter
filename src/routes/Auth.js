@@ -23,23 +23,49 @@ export default function Auth() {
   };
 
   return (
-    <div className="authContainer">
-      <FontAwesomeIcon
-        icon={faTwitter}
-        color={"#04AAFF"}
-        size="3x"
-        style={{ marginBottom: 30 }}
+    <div className="socialLogin">
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Monomaniac+One&display=swap"
+        rel="stylesheet"
       />
-      <h1 className="headLine">로그인</h1>
+      <div className="socialText">
+        <h1
+          style={{
+            fontFamily: "Monomaniac One",
+          }}
+        >
+          Mwitter
+        </h1>
 
-      <AuthForm setResError={setResError} />
-      <OtherLogin />
+        <h2>환영합니다</h2>
 
-      <h1 onClick={onMoveSignUp} className="signUpBtn">
-        회원가입
-      </h1>
-      {/* <SignForm setResError={setResError} />/ */}
-      <span className="authError">{resError}</span>
+        <h2>최신 소식에 대해</h2>
+        <h2>알아보세요</h2>
+      </div>
+      <div className="authContainer">
+        <FontAwesomeIcon
+          icon={faTwitter}
+          color={"#04AAFF"}
+          size="3x"
+          style={{ marginBottom: 30 }}
+        />
+        <h1 className="headLine">로그인</h1>
+
+        <AuthForm setResError={setResError} />
+        <OtherLogin />
+
+        <br />
+        <br />
+
+        <h1>아직 회원이 아닌가요?</h1>
+        <h1 onClick={onMoveSignUp} className="signUpBtn">
+          회원가입
+        </h1>
+        {/* <SignForm setResError={setResError} />/ */}
+        <span className="authError">{resError}</span>
+      </div>
     </div>
   );
 }

@@ -81,17 +81,17 @@ export default function Mweet({ mweetObj, isOwner }) {
               })}
               autoFocus
               type="text"
-              placeholder="Edit your comment."
+              placeholder="수정할 내용을 작성해 주세요."
               value={targetValue}
               onChange={onChangeMweet}
               className="formInput"
             />
 
             <span>{errors?.newMweet?.message}</span>
-            <button className="formBtn">Edit</button>
+            <button className="formBtn">수정하기</button>
           </form>
           <button onClick={toggleEditing} className="formBtn cancelBtn">
-            Cancel
+            취소
           </button>
         </>
       ) : (

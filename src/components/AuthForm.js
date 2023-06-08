@@ -44,7 +44,7 @@ export default function AuthForm({ setResError }) {
           autoComplete="off"
         />
 
-        <input type="submit" className="authSwitch" value="확인" />
+        <input type="submit" className="authSwitch" value="확 인" />
         <span className="authError">
           {errors?.loginId?.message
             ? errors?.loginId?.message

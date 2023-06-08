@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithubSquare } from "@fortawesome/free-brands-svg-icons";
-import { useNavigate } from "react-router-dom";
+
 export default function Footer() {
   return (
     <div className="footerMain">

@@ -101,7 +101,7 @@ export default function MweetFactory({ userObj }) {
           {...register("chat", {
             required: "내용을 작성해 주세요.",
           })}
-          placeholder="What's on your mind?"
+          placeholder="......."
           maxLength={120}
           className="factoryInput__input"
         />
@@ -109,7 +109,7 @@ export default function MweetFactory({ userObj }) {
         <input type="submit" value="&rarr;" className="factoryInput__arrow" />
       </div>
       <label htmlFor="attach-file" className="factoryInput__label">
-        <span>Add photos</span>
+        <span>사진 추가하기</span>
         <FontAwesomeIcon icon={faPlus} />
       </label>
       <input
@@ -132,7 +132,7 @@ export default function MweetFactory({ userObj }) {
             }}
           />
           <div className="factoryForm__clear" onClick={onClearAttachment}>
-            <span>Remove</span>
+            <span>지우기</span>
             <FontAwesomeIcon icon={faTimes} />
           </div>
         </div>

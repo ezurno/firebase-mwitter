@@ -57,7 +57,7 @@ form {
 .formBtn {
   cursor: pointer;
   width: 100%;
-  padding: 7px 20px;
+  padding: 10px 20px;
   text-align: center;
   color: white;
   border-radius: 20px;
@@ -81,7 +81,7 @@ form {
 }
 
 .logOut {
-  margin-top: 50px;
+  margin: 50px 0;
 }
 
 /* Nwitter Factory */
@@ -337,4 +337,33 @@ form {
 
 .gitIcon:hover {
   color: #04aaff;
+}
+
+.socialLogin {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  max-width: 960px;
+  min-width: 960px;
+}
+
+.socialText {
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  margin-right: 50px;
+}
+
+.socialText h1 {
+  color: #04aaff;
+  font-size: 48px;
+  margin: 96px 0px 120px 0px;
+}
+.socialText h2 {
+  font-size: 36px;
+  margin-bottom: 30px;
 }

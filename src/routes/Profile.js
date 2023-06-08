@@ -56,7 +56,7 @@ export default function Profile({ userObj, refreshUser }) {
           type="text"
           onChange={onChange}
           value={newDisplayName}
-          placeholder="Display Name"
+          placeholder="변경할 아이디를 작성해 주세요."
           className="formInput"
         />
         <input
@@ -64,12 +64,12 @@ export default function Profile({ userObj, refreshUser }) {
           placeholder="Update Profile"
           className="formBtn"
           style={{
-            marginTop: 10,
+            marginTop: 16,
           }}
         />
       </form>
       <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
-        Log Out
+        로그아웃
       </span>
     </div>
   );

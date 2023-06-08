@@ -49,7 +49,7 @@ export default function SignForm({ setResError }) {
       />
       <span className="authError">{signErrors?.signUpPw?.message}</span>
 
-      <input type="submit" className="authSwitch" value="확인" />
+      <input type="submit" className="authSwitch" value="확 인" />
     </form>
   );
 }
