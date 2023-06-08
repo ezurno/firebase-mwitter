@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/firebase-mwitter/static/css/main.934fef48.css",
-    "main.js": "/firebase-mwitter/static/js/main.c4274130.js",
+    "main.js": "/firebase-mwitter/static/js/main.07c019c3.js",
     "index.html": "/firebase-mwitter/index.html",
     "main.934fef48.css.map": "/firebase-mwitter/static/css/main.934fef48.css.map",
-    "main.c4274130.js.map": "/firebase-mwitter/static/js/main.c4274130.js.map"
+    "main.07c019c3.js.map": "/firebase-mwitter/static/js/main.07c019c3.js.map"
   },
   "entrypoints": [
     "static/css/main.934fef48.css",
-    "static/js/main.c4274130.js"
+    "static/js/main.07c019c3.js"
   ]
 }
