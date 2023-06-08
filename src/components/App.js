@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Router from "components/Router";
 import { authService } from "fbase";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
+import Footer from "components/Footer";
 
 export default function App() {
   const [init, setInit] = useState(false);
@@ -54,7 +55,8 @@ export default function App() {
       ) : (
         "Initializing..."
       )}
-      <footer>&copy; {new Date().getFullYear()} Mwitter</footer>
+      {/* <footer>&copy; {new Date().getFullYear()} Mwitter</footer> */}
+      <Footer />
     </>
   );
 }
