@@ -1,4 +1,8 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  createHashRouter,
+} from "react-router-dom";
 import Auth from "../routes/Auth";
 import Home from "../routes/Home";
 import Profile from "../routes/Profile";
@@ -6,7 +10,7 @@ import Navigation from "./Navigation";
 import SignUp from "../routes/SignUp";
 
 const useRouter = (isLogin, userObj, refreshUser) => {
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
       path: "/",
       element: isLogin ? (

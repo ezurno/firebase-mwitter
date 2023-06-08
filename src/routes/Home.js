@@ -1,14 +1,7 @@
-import Mweet from "components/Mweet";
-import MweetFactory from "components/MweetFactory";
-import { dbService, storageService } from "fbase";
-import {
-  addDoc,
-  collection,
-  getDocs,
-  onSnapshot,
-  orderBy,
-  query,
-} from "firebase/firestore";
+import Mweet from "../components/Mweet";
+import MweetFactory from "../components/MweetFactory";
+import { dbService } from "../fbase";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
 
 export default function Home({ userObj }) {

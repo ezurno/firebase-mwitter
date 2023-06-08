@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Router from "components/Router";
+import Router from "./Router";
 import { authService } from "fbase";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
-import Footer from "components/Footer";
+import Footer from "./Footer";
 
 export default function App() {
   const [init, setInit] = useState(false);

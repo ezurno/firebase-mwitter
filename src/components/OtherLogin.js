@@ -1,20 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTwitter,
-  faGoogle,
-  faGithub,
-} from "@fortawesome/free-brands-svg-icons";
+import { faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons";
 
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  getAuth,
-  signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 
-import { authService, firebaseInstance } from "fbase";
+import { authService } from "fbase";
 
 export default function OtherLogin() {
   const onSocialClick = async (event) => {

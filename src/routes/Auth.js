@@ -5,13 +5,10 @@ import {
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 
-import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { authService, firebaseInstance } from "fbase";
-import AuthForm from "components/AuthForm";
-import SignForm from "components/SignForm";
+import AuthForm from "../components/AuthForm";
 import { useNavigate } from "react-router-dom";
-import OtherLogin from "components/OtherLogin";
+import OtherLogin from "../components/OtherLogin";
 
 export default function Auth() {
   const [resError, setResError] = useState("");

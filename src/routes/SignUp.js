@@ -1,26 +1,17 @@
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  getAuth,
-  signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTwitter,
-  faGoogle,
-  faGithub,
-} from "@fortawesome/free-brands-svg-icons";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 
-import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { authService, firebaseInstance } from "fbase";
-import AuthForm from "components/AuthForm";
-import SignForm from "components/SignForm";
+import { authService } from "fbase";
+import SignForm from "../components/SignForm";
 import { useNavigate } from "react-router-dom";
-import OtherLogin from "components/OtherLogin";
+import OtherLogin from "../components/OtherLogin";
 
 export default function Auth() {
   const [resError, setResError] = useState("");

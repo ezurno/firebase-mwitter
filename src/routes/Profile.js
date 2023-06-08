@@ -1,4 +1,4 @@
-import { authService, dbService } from "fbase";
+import { authService, dbService } from "../fbase";
 import { collection, query, getDoc, getDocs, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
